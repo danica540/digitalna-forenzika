@@ -1,0 +1,66 @@
+version: '2.4'
+
+networks:
+  digi_net:
+
+volumes:
+  elasticsearch_data:
+  grafana_data:
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    networks:
+      - digi_net
+    environment:
+      - node.name=es01
+      - cluster.name=elafk_df
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 5GB
+    ports:
+      - 9200:9200
+    healthcheck:
+      test: curl --fail http://localhost:9200 || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.2
+    networks:
+      - digi_net
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - 5601:5601
+    healthcheck:
+      test: curl --fail localhost:5601/api/status
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+  
+  # dashboard:
+  #   image: grafana/grafana:7.3.7
+  #   networks:
+  #     - digi_net
+  #   environment:
+  #     GF_SECURITY_ADMIN_PASSWORD: digi2021
+  #   ports:
+  #     - 3000:3000
+  #  volumes:
+  #    - $PWD/grafana/:/etc/grafana/provisioning/:ro
+
+
