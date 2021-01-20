@@ -9,6 +9,9 @@ pycodestyle = "*"
 autopep8 = "*"
 
 [packages]
+tld = "*"
+elasticsearch = "*"
+alive-progress = "*"
 
 [requires]
 python_version = "3.8"
