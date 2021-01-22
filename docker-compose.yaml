@@ -52,15 +52,3 @@ services:
       elasticsearch:
         condition: service_healthy
   
-  # dashboard:
-  #   image: grafana/grafana:7.3.7
-  #   networks:
-  #     - digi_net
-  #   environment:
-  #     GF_SECURITY_ADMIN_PASSWORD: digi2021
-  #   ports:
-  #     - 3000:3000
-  #  volumes:
-  #    - $PWD/grafana/:/etc/grafana/provisioning/:ro
-
-

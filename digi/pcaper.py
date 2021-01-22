@@ -109,7 +109,7 @@ def _normalize_tshark_packet(packet):
     }
 
 
-def load_packets(pcap_file):
+def load_packets(pcap_file, target_address):
     """Loads packets from pcap_file for further analysis"""
 
     print(f"[i] Filter packets (tshark)")
@@ -136,7 +136,7 @@ def load_packets(pcap_file):
                                     f"-eudp.stream",
                                     f"-eudp.length",
                                     f"-NmnNtdv",
-                                    f"ip && (tcp || udp)"
+                                    f"ip.addr == {target_address} && (tcp || udp)"
                                     ],
                                    capture_output=True,
                                    text=True,

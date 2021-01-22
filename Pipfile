@@ -12,6 +12,7 @@ autopep8 = "*"
 tld = "*"
 elasticsearch = "*"
 alive-progress = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"

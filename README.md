@@ -5,9 +5,10 @@
 **Starting**
 ```bash
 docker-compose up -d
+pipenv shell && pipenv sync
 ```
 
-**MongoDB Shell**
+**Analyzing packet**
 ```bash
-docker-compose exec mango mongo
+python digi --file ./samples/sample.pcapng --ip 192.168.0.108
 ```
