@@ -136,7 +136,7 @@ def load_packets(pcap_file, target_address):
                                     f"-eudp.stream",
                                     f"-eudp.length",
                                     f"-NmnNtdv",
-                                    f"ip.addr == {target_address} && (tcp || udp)"
+                                    f"ip.addr == {target_address} && (tcp || udp) && !dns"
                                     ],
                                    capture_output=True,
                                    text=True,
